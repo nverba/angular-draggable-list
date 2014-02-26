@@ -1,48 +1,64 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" ng-app="DraggableListDemo">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>angular-draggable-list by nverba</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>angular-pikaday by nverba</title>
+    <meta name="description" content="A draggable list directive for AngularJS">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/draggable-list.css">
+    <link rel="stylesheet" href="lib/highlight/styles/github.css">
 
+    <script src="lib/angular.js"></script>
   </head>
-  <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/nverba/angular-draggable-list">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/nverba/angular-draggable-list/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/nverba/angular-draggable-list/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+  <body ng-controller="Ctrl">
 
-    <div class="wrapper">
-
-      <section>
-        <div id="title">
+    <div id="hero">
+      <div class="wrap">
+        <div class="brand">
+          <img src="img/screenshot.png" class="screenshot" alt="Screenshot" />
           <h1>angular-draggable-list</h1>
-          <p>A bare bones draggable list directive for AngularJS</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/nverba">nverba</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
-
-        <p>Demo to follow...</p>
-      </section>
-
+        <h3 class="tagline">An AngularJS directive for draggable lists</h3>
+        <a href="https://github.com/nverba/angular-draggable-list" target="_blank" class="button github-button">View on GitHub</a>
+      </div>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+
+    <div id="content">
+      <div class="wrap">
+        <div id="marked">
+
+<!-- MARKDOWN CONTENT /////////////////////////////////////////////////////////////////////////////////// -->
+
+<ul>
+  <li ng-repeat="item in array" draggable-list="array" draggable="true">{{ item }}</li>
+</ul>
+
+
+<!-- CLOSE MARKDOWN CONTENT ///////////////////////////////////////////////////////////////////////////// -->
+
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <div class="wrap">
+        <p class="license">Code licensed under the <a href="http://opensource.org/licenses/MIT" target="_blank">MIT License</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+      </div>
+    </div>
+
+    <script src="lib/marked.js"></script>
+    <script src="lib/highlight/highlight.pack.js"></script>
+
+    <script>
+        var mark = document.getElementById("marked");
+        mark.innerHTML = marked(mark.innerHTML);
+        hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="lib/moment.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/draggable-list.js"></script>
+
   </body>
 </html>
