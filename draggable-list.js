@@ -11,7 +11,7 @@ angular.module('draggableList', [])
       link: function (scope, elem, attrs) {
 
         elem.bind('dragstart', function (e) {
-          e.dataTransfer.setData('from_index', scope.$parent.$index);
+          dragData.from_index = scope.$parent.$index;
           dragData.elem = e.target || e.srcElement;
           // clone the original array - used to reset scope later
           dragData.origin = angular.copy(scope.draggableList);
@@ -21,14 +21,14 @@ angular.module('draggableList', [])
           if ((e.target || e.srcElement) !== dragData.elem) { // reduces flickering
 
             scope.$apply(function () {
-              scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(e.dataTransfer.getData('from_index'), 1)[0]);
+              scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
             });
           }
         });
 
         elem.bind('dragover', function (e) {
           // only prevent default on siblings - stops interaction between separate lists
-          if ((e.target.parentNode || e.srcElement.parentNode) === dragData.elem.parentNode) e.preventDefault();
+          if ((e.target.parentNode || e.srcElement.parentNode) === dragData.elem.parentNode) { e.preventDefault(); }
         });
 
         elem.bind('dragleave', function (e) {
@@ -39,7 +39,7 @@ angular.module('draggableList', [])
         elem.bind('drop', function (e) {
           e.preventDefault();
           scope.$apply(function () {
-            scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(e.dataTransfer.getData('from_index'), 1)[0]);
+            scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
           });
         });
 
