@@ -30,9 +30,28 @@
 
 <!-- MARKDOWN CONTENT /////////////////////////////////////////////////////////////////////////////////// -->
 
+A simple, draggable list directive for AngularJS, using the HTML5 drag and drop API.
+
+### Inject the module
+
+```
+app = angular.module('DemoApp', ['draggableList'])
+```
+
+### Basic usage (no CSS)
+Pass the scope to the `draggable-list` directive.
+
+```
 <ul>
   <li ng-repeat="item in array" draggable-list="array" draggable="true">{{ item }}</li>
 </ul>
+```
+
+<ul>
+  <li ng-repeat="item in array" draggable-list="array" draggable="true">{{ item }}</li>
+</ul>
+
+__Scope: `{{ array }}`__
 
 
 <!-- CLOSE MARKDOWN CONTENT ///////////////////////////////////////////////////////////////////////////// -->
