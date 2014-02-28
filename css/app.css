@@ -114,8 +114,7 @@ pre:after {
 #hero h1 {
   display: inline-block;
   font-size: 26px;
-  margin: 0;
-  line-height: 80px;
+  line-height: 1;
   color: #dd1b16;
 }
 
@@ -124,21 +123,14 @@ pre:after {
   letter-spacing: -0.04em;
 }
 
-#hero .screenshot {
-  display: inline-block;
-  width: 80px;
-  margin: 10px 20px;
-  vertical-align: bottom;
-}
-
 #hero h3 {
   margin: 0 0  10px;
-  font-size: 18px;
+  font-size: 28px;
   text-align: center;
 }
 
 #hero .tagline {
-  font-size: 22px;
+  font-size: 19px;
 }
 
 #hero .button {
@@ -185,15 +177,6 @@ pre:after {
     padding: 30px 0;
   }
 
-  #hero .screenshot {
-    display: block;
-    position: absolute;
-    margin: 0;
-    left: 0px;
-    top: 25px;
-    width: 240px;
-  }
-
   #hero .brand,
   #hero h3 {
     text-align: left;
@@ -202,6 +185,23 @@ pre:after {
   #hero .button {
     display: inline-block;
     clear: both;
+  }
+
+  #hero h1 {
+    margin: 0;
+    font-size: 54px;
+    line-height: 1;
+  }
+
+  #hero h3 {
+    font-size: 23px;
+    margin-bottom: 30px;
+  }
+
+  #hero .tagline {
+    font-size: 23px;
+    line-height: 1;
+    margin-top: 15px;
   }
 
 }
@@ -217,14 +217,8 @@ pre:after {
     width: auto;
   }
 
-  #hero .screenshot {
-    left: 0px;
-    top: -20px;
-    width: 315px;
-    margin: 0;
-  }
-
   #hero h1 {
+    margin: 0;
     font-size: 54px;
     line-height: 1;
   }
