@@ -185,11 +185,6 @@ pre:after {
     padding: 30px 0;
   }
 
-  #hero .wrap {
-    padding-left: 250px;
-    width: 540px;
-  }
-
   #hero .screenshot {
     display: block;
     position: absolute;
@@ -219,7 +214,6 @@ pre:after {
   }
 
   #hero .wrap {
-    padding-left: 350px;
     width: auto;
   }
 
