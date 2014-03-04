@@ -69,6 +69,7 @@ angular.module('draggableList', [])
         if (draggable) {
 
           elem.bind('dragstart', function (e) {
+            // Firefox needs this to be enable HTML5 draggable, det to Text for ie compatability
             e.dataTransfer.setData('Text', 'Firefox wont drag without this???');
             handleDragstart(e)
           });
