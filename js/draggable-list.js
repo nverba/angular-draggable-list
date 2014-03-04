@@ -2,6 +2,27 @@
 
 angular.module('draggableList', [])
   .directive('draggableList', function () {
+
+    function isDropTarget(e) {
+      return (e.target || e.srcElement).parentElement === dragData.elem.parentElement;
+    }
+
+    function list(scope) {
+
+      var methods = {
+        reset: function () {
+          angular.copy(dragData.origin, scope.draggableList);
+          return methods;
+        },
+        update: function () {
+          scope.$apply(function () {
+            scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
+          });
+        }
+      };
+      return methods;
+    }
+
     var dragData = {};
     return {
       restrict: 'A',
@@ -11,22 +32,16 @@ angular.module('draggableList', [])
       link: function (scope, elem, attrs) {
 
         elem.bind('dragstart', function (e) {
-          e.dataTransfer.setData('text/plain', 'Firefox wont drag without this???');
+          // Firefox needs this to be enable HTML5 draggable, set to Text for ie compatability
+          e.dataTransfer.setData('Text', 'Firefox wont drag without this???');
           dragData.from_index = scope.$parent.$index;
           dragData.elem = e.target || e.srcElement;
           dragData.origin = angular.copy(scope.draggableList); // clone the original array - used to reset scope later
         });
 
         elem.bind('dragenter', function (e) {
-          if ((e.target || e.srcElement).parentElement === dragData.elem.parentElement) { // contain events to list origin
-            if ((e.target || e.srcElement) !== dragData.elem) { // reduces flickering
-              e.preventDefault();
-
-              scope.$apply(function () {
-                scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
-              });
-            }
-          }
+          e.preventDefault();
+          if (isDropTarget(e)) { list(scope).reset().update(); }
         });
 
         elem.bind('dragover', function (e) {
@@ -34,18 +49,12 @@ angular.module('draggableList', [])
         });
 
         elem.bind('dragleave', function (e) {
-          if ((e.target || e.srcElement).parentElement === dragData.elem.parentElement) {
-            angular.copy(dragData.origin, scope.draggableList);
-          }
+          // place holder
         });
 
         elem.bind('drop', function (e) {
           e.preventDefault(); // important! stop firefox redirecting
-          if ((e.target || e.srcElement).parentElement === dragData.elem.parentElement) {
-            scope.$apply(function () {
-              scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
-            });
-          }
+          if (isDropTarget(e)) { list(scope).reset().update(); }
         });
 
         elem.bind('dragend', function (e) {
