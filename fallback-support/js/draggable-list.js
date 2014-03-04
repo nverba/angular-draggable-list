@@ -69,7 +69,7 @@ angular.module('draggableList', [])
         if (draggable) {
 
           elem.bind('dragstart', function (e) {
-            e.dataTransfer.setData('text/plain', 'Firefox wont drag without this???');
+            e.dataTransfer.setData('Text', 'Firefox wont drag without this???');
             handleDragstart(e)
           });
 
