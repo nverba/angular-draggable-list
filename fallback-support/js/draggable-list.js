@@ -6,6 +6,8 @@ angular.module('draggableList', [])
         draggable = 'draggable' in dragged,
         dragData = {};
 
+        console.log(draggable);
+
         if (!draggable) {
           // this holds hover text for fallback
           dragged.style.position = 'absolute';
@@ -38,23 +40,19 @@ angular.module('draggableList', [])
         function handleDragenter(e) {
           e.preventDefault();
           if ((e.target || e.srcElement).parentElement === dragData.elem.parentElement) { // contain events to list origin
-            if ((e.target || e.srcElement) !== dragData.elem) { // reduces flickering
-              scope.$apply(function () {
-                scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
-              });
-            }
+            angular.copy(dragData.origin, scope.draggableList); //reset array
+            scope.$apply(function () {
+              scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
+            });
           }
         }
 
         function handleDragLeave(e) {
-          if ((e.target || e.srcElement).parentElement === dragData.elem.parentElement) {
-            angular.copy(dragData.origin, scope.draggableList); //reset array
-          }
         }
 
         function handleDrop (e) {
-          e.preventDefault(); // important! stop firefox redirecting
           if ((e.target || e.srcElement).parentElement === dragData.elem.parentElement) {
+            angular.copy(dragData.origin, scope.draggableList); //reset array
             scope.$apply(function () {
               scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
             });
@@ -87,6 +85,7 @@ angular.module('draggableList', [])
           });
 
           elem.bind('drop', function (e) {
+            e.preventDefault(); // important! stop firefox redirecting
             handleDrop(e);
           });
 
