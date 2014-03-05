@@ -6,7 +6,6 @@ var dragged    = document.createElement('span'),
 if (!draggable) {
 
   // MDN CustomEvent constructor pollyfill
-
   if (typeof CustomEvent !== 'function') {
     (function () {
       function CustomEvent ( event, params ) {
@@ -19,6 +18,20 @@ if (!draggable) {
       window.CustomEvent = CustomEvent;
     })();
   }
+
+  // manage drag text for fallback ie-9 support
+  dragged.style.position = 'absolute';
+  dragged.style.display = 'none';
+  document.body.appendChild(dragged);
+
+  window.onmousemove = function (e) {
+    e.preventDefault();
+    var x = e.clientX,
+        y = e.clientY;
+
+    dragged.style.left = x + 10 + 'px';
+    dragged.style.top = (document.getElementsByTagName("html")[0].scrollTop + y - 10) + 'px';
+  };
 
   var dragData   = {},
       dragstart  = new CustomEvent("dragstart"),
@@ -58,6 +71,8 @@ if (!draggable) {
       e.preventDefault();
       dragData.origin = (e.target || e.srcElement); // Refactor after testing
       element.dispatchEvent(dragstart);
+      dragged.innerHTML = element.innerHTML;
+      dragged.style.display = 'inline';
     });
 
     element.addEventListener('mouseover', function(e) {
@@ -75,6 +90,7 @@ if (!draggable) {
     });
 
     element.addEventListener('mouseup', function(e) {
+      dragged.style.display = 'none';
       if (dragData.target) {
         element.dispatchEvent(drop);
       }
@@ -83,7 +99,7 @@ if (!draggable) {
     });
   }
 
-  setTimeout(function() {
+  angular.element(window).bind('load', function() {
 
     var draggables = getElementsByAttribute('draggable');
 
@@ -91,5 +107,5 @@ if (!draggable) {
       addCustomEvents(draggables[i]);
     }
 
-  }, 100);
+  });
 }
