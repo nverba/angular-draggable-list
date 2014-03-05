@@ -40,7 +40,6 @@ angular.module('draggableList', [])
         });
 
         elem.bind('dragenter', function (e) {
-          e.preventDefault();
           if (isDropTarget(e)) { list(scope).reset().update(); }
         });
 
