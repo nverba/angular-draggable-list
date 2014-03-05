@@ -5,15 +5,6 @@ var dragged    = document.createElement('span'),
 
 if (!draggable) {
 
-  var dragData   = {},
-      dragstart  = new CustomEvent("dragstart"),
-      dragenter  = new CustomEvent("dragenter"),
-      dragover   = new CustomEvent("dragover"),
-      dragleave  = new CustomEvent("dragleave"),
-      drop       = new CustomEvent("drop"),
-      dragend    = new CustomEvent("dragend"),
-      element;
-
   // MDN CustomEvent constructor pollyfill
 
   if (typeof CustomEvent !== 'function') {
@@ -24,12 +15,31 @@ if (!draggable) {
         evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
         return evt;
        }
-
       CustomEvent.prototype = window.CustomEvent.prototype;
-
       window.CustomEvent = CustomEvent;
     })();
   }
+
+  var dragData   = {},
+      dragstart  = new CustomEvent("dragstart"),
+      dragenter  = new CustomEvent("dragenter"),
+      dragover   = new CustomEvent("dragover"),
+      dragleave  = new CustomEvent("dragleave"),
+      drop       = new CustomEvent("drop"),
+      dragend    = new CustomEvent("dragend"),
+      element;
+
+  var extendDataTransfer = {
+    setData: function (type, string) {
+      dragData[type] = string;
+    },
+    getData: function (type) {
+      return dragData[type];
+    }
+  }
+
+  dragstart.dataTransfer = extendDataTransfer;
+  drop.dataTransfer = extendDataTransfer;
 
   function getElementsByAttribute(attribute) {
     var elements = [];
