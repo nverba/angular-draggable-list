@@ -1,5 +1,20 @@
 'use strict';
 
+/*
+This shim partially pollyfills the HTML5 drag & drop API in IE9,
+to work with the angular-draggable-list directive,
+
+include it conditionally for IE9 only...
+
+<!--[if IE 9]>
+  <script src="js/draggable-list-ie9-shim.js"></script>
+<![endif]-->
+
+Copyright © 2014 Michael Murray | MIT license | https://github.com/nverba/angular-draggable-list
+ */
+
+
+
 var dragged    = document.createElement('span'),
     draggable  = 'draggable' in dragged;
 

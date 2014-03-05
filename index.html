@@ -27,7 +27,7 @@
 
 <!-- MARKDOWN CONTENT /////////////////////////////////////////////////////////////////////////////////// -->
 
-A simple directive for sortable lists using the HTML5 drag and drop API.
+An __AngularJS__ directive for draggable, sortable lists using the __HTML5 drag and drop API__. Tested and working in all good desktop browsers, including __IE10__.
 
 ### Basic usage (no CSS)
 
@@ -36,6 +36,18 @@ Include the `draggableList` module as a dependency.
 ```
 app = angular.module('DemoApp', ['draggableList']);
 ```
+
+### IE9 support
+
+I've made a shim for IE9 support, it partially pollyfills the HTML5 drag & drop API by creating and dispatching the draggable events, __so watch out for other libraries that use this API or otherwise detect it as a feature__.
+
+```
+<!--[if IE 9]>
+  <script src="js/draggable-list-ie9-shim.js"></script>
+<![endif]-->
+```
+#### Caveat: The shim works by creating and dispatching the missing draggable events.
+Any other libraries that try to detect or use these events in ie9 mught have issues.
 
 Pass the named scope to the `draggable-list` attribute, and set the element's `draggable` attribute to `true`.
 
