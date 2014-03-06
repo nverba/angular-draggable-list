@@ -19,12 +19,6 @@ Pass the named scope to the `draggable-list` attribute, and set the element's `d
 </ul>
 ```
 
-<ul>
-  <li ng-repeat="item in array" draggable-list="array" draggable="true">{{ item }}</li>
-</ul>
-
-__Scope: `{{ array }}`__
-
 ### IE9 support
 
 I've made a shim for IE9 support, it partially pollyfills the HTML5 drag & drop API by creating and dispatching the draggable events, __so watch out for other libraries that use this API or otherwise detect it as a feature__.
