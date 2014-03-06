@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>angular-draggable-list</title>
-    <meta name="description" content="A simple AngularJS directive for sortable lists using the HTML5 drag and drop API.">
+    <meta name="description" content="An AngularJS directive for draggable, sortable lists using the HTML5 drag and drop API">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <link rel="stylesheet" type="text/css" href="css/draggable-list.css">
@@ -37,18 +37,6 @@ Include the `draggableList` module as a dependency.
 app = angular.module('DemoApp', ['draggableList']);
 ```
 
-### IE9 support
-
-I've made a shim for IE9 support, it partially pollyfills the HTML5 drag & drop API by creating and dispatching the draggable events, __so watch out for other libraries that use this API or otherwise detect it as a feature__.
-
-```
-<!--[if IE 9]>
-  <script src="js/draggable-list-ie9-shim.js"></script>
-<![endif]-->
-```
-#### Caveat: The shim works by creating and dispatching the missing draggable events.
-Any other libraries that try to detect or use these events in ie9 mught have issues.
-
 Pass the named scope to the `draggable-list` attribute, and set the element's `draggable` attribute to `true`.
 
 ```
@@ -62,6 +50,16 @@ Pass the named scope to the `draggable-list` attribute, and set the element's `d
 </ul>
 
 __Scope: `{{ array }}`__
+
+### IE9 support
+
+I've made a shim for IE9 support, it partially pollyfills the HTML5 drag & drop API by creating and dispatching the draggable events, __so watch out for other libraries that use this API or otherwise detect it as a feature__.
+
+```
+<!--[if IE 9]>
+  <script src="js/draggable-list-ie9-shim.js"></script>
+<![endif]-->
+```
 
 
 <!-- CLOSE MARKDOWN CONTENT ///////////////////////////////////////////////////////////////////////////// -->
