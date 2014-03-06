@@ -1,0 +1,9 @@
+.list-item.ng-enter, .list-item.ng-leave {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.list-item.ng-enter { }        /* starting animations for enter */
+.list-item.ng-enter-active { } /* terminal animations for enter */
+.list-item.ng-leave { }        /* starting animations for leave */
+.list-item.ng-leave-active { } /* terminal animations for leave */

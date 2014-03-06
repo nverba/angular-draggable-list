@@ -1,4 +1,4 @@
-app = angular.module('DraggableListDemo', ['draggableList'])
+app = angular.module('DraggableListDemo', ['ngAnimate', 'draggableList'])
   .controller('Ctrl', function($scope) {
 
     $scope.array = [
