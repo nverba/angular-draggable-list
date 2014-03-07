@@ -4,7 +4,7 @@
 // ----------------------
 // Copyright © 2014 Michael Murray | MIT license | https://github.com/nverba/angular-draggable-list
 
-angular.module('draggableList', [])
+angular.module('draggableList', ['ngAnimate'])
   .directive('draggableList', function () {
 
     function isDropTarget(e) {
@@ -19,20 +19,11 @@ angular.module('draggableList', [])
       dragData.i = scope.$parent.$index;
     }
 
-    function list(scope) {
-
-      var methods = {
-        reset: function () {
-          angular.copy(dragData.origin, scope.draggableList);
-          return methods;
-        },
-        update: function () {
-          scope.$apply(function () {
-            scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
-          });
-        }
-      };
-      return methods;
+    function update(scope) {
+      scope.$apply(function () {
+        scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
+        dragData.from_index = scope.$parent.$index;
+      });
     }
 
     var dragData = {};
@@ -54,7 +45,7 @@ angular.module('draggableList', [])
         });
 
         elem.bind('dragenter', function (e) {
-          if (isDropTarget(e) && isNewTarget(scope)) { setThisTarget(scope); list(scope).reset().update(); }
+          if (isDropTarget(e) && isNewTarget(scope)) { setThisTarget(scope); update(scope); }
         });
 
         elem.bind('dragover', function (e) {
@@ -67,7 +58,6 @@ angular.module('draggableList', [])
 
         elem.bind('drop', function (e) {
           e.preventDefault(); // important! stop firefox redirecting
-          if (isDropTarget(e)) { list(scope).reset().update(); }
         });
 
         elem.bind('dragend', function (e) {
