@@ -4,7 +4,7 @@
 // ----------------------
 // Copyright © 2014 Michael Murray | MIT license | https://github.com/nverba/angular-draggable-list
 
-angular.module('draggableList', ['ngAnimate'])
+angular.module('draggableList', [])
   .directive('draggableList', function () {
 
     function isDropTarget(e) {
