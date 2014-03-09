@@ -12,11 +12,7 @@ angular.module('draggableList', [])
     }
 
     function isNewTarget(scope) {
-      return dragData.i !== scope.$parent.$index;
-    }
-
-    function setThisTarget(scope) {
-      dragData.i = scope.$parent.$index;
+      return dragData.from_index !== scope.$parent.$index;
     }
 
     function update(scope) {
@@ -45,7 +41,7 @@ angular.module('draggableList', [])
         });
 
         elem.bind('dragenter', function (e) {
-          if (isDropTarget(e) && isNewTarget(scope)) { setThisTarget(scope); update(scope); }
+          if (isDropTarget(e) && isNewTarget(scope)) { update(scope); }
         });
 
         elem.bind('dragover', function (e) {
