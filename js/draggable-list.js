@@ -36,8 +36,6 @@ angular.module('draggableList', [])
           dragData.from_index = scope.$parent.$index;
           dragData.elem = e.target || e.srcElement;
           dragData.origin = angular.copy(scope.draggableList); // clone the original array - used to reset scope later
-
-          setThisTarget(scope);
         });
 
         elem.bind('dragenter', function (e) {
