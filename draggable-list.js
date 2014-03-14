@@ -7,27 +7,35 @@
 angular.module('draggableList', [])
   .directive('draggableList', function () {
 
-    function isDropTarget(e) {
-      return (e.target || e.srcElement).parentElement === dragData.elem.parentElement;
+    var isTouchDevice = !!('ontouchstart' in window),
+        dragData = {};
+
+    function isDropTarget(element) {
+      return element.parentElement === dragData.elem.parentElement;
     }
 
-    function list(scope) {
-
-      var methods = {
-        reset: function () {
-          angular.copy(dragData.origin, scope.draggableList);
-          return methods;
-        },
-        update: function () {
-          scope.$apply(function () {
-            scope.draggableList.splice(scope.$parent.$index, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
-          });
-        }
-      };
-      return methods;
+    function isNewTarget(scope) {
+      return dragData.from_index !== scope.$parent.$index;
     }
 
-    var dragData = {};
+    function isTouchTarget(element) {
+      return element !== dragData.elem;
+    }
+
+    function update(scope, newIndex) {
+      scope.$apply(function () {
+        scope.draggableList.splice(newIndex, 0, scope.draggableList.splice(dragData.from_index, 1)[0]);
+        dragData.from_index = newIndex;
+      });
+    }
+
+    function getElement(e) {
+      return document.elementFromPoint(
+        e.changedTouches[0].clientX,
+        e.changedTouches[0].clientY
+      );
+    }
+
     return {
       restrict: 'A',
       scope: {
@@ -36,15 +44,14 @@ angular.module('draggableList', [])
       link: function (scope, elem, attrs) {
 
         elem.bind('dragstart', function (e) {
-          // Firefox needs this to be enable HTML5 draggable, set to Text for ie compatability
+          // Firefox needs this to enable HTML5 draggable feature. (Set to 'Text' for IE compatability)
           e.dataTransfer.setData('Text', 'Firefox wont drag without this???');
           dragData.from_index = scope.$parent.$index;
           dragData.elem = e.target || e.srcElement;
-          dragData.origin = angular.copy(scope.draggableList); // clone the original array - used to reset scope later
         });
 
         elem.bind('dragenter', function (e) {
-          if (isDropTarget(e)) { list(scope).reset().update(); }
+          if (isDropTarget(e.target || e.srcElement) && isNewTarget(scope)) { update(scope, scope.$parent.$index); }
         });
 
         elem.bind('dragover', function (e) {
@@ -57,12 +64,39 @@ angular.module('draggableList', [])
 
         elem.bind('drop', function (e) {
           e.preventDefault(); // important! stop firefox redirecting
-          if (isDropTarget(e)) { list(scope).reset().update(); }
         });
 
         elem.bind('dragend', function (e) {
           dragData = {};
         });
+
+        if (isTouchDevice) {
+
+          elem.bind('touchstart', function (e) {
+            dragData.from_index = scope.$parent.$index;
+            dragData.elem = e.target || e.srcElement;
+          });
+
+          elem.bind('touchmove', function (e) {
+            e.preventDefault();
+
+            var element = getElement(e),
+                newIndex;
+
+            if (isTouchTarget(element) && isDropTarget(element)) {
+              newIndex = Array.prototype.indexOf.call(element.parentElement.children, element);
+              update(scope, newIndex);
+              dragData.elem = element;
+            }
+
+            elem.addClass('touch-active');
+          });
+
+          elem.bind('touchend', function (e) {
+            dragData = {};
+            elem.removeClass('touch-active');
+          });
+        }
       }
     };
   });
