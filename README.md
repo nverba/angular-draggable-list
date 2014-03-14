@@ -1,7 +1,6 @@
-### An alpha implementation of a draggable lists directive for AngularJS using the HTML5 Drag and Drop API.
+### An AngularJS directive for draggable, sortable lists using the HTML5 drag and drop and touch APIs.
 
-This is currently early in development, it has been tested in most modern browsers and works in IE10, there is also a shim for IE9, but use with caution.
-I intend to develop a number of pluggable themes with css animations and effects to make things a bit nicer.
+This directive has no dependencies other than AngularJS. The aim is to make this as backwards compatable as possible, whilst only using native APIs and raw Javascript/Angular. It is still under development, so use at your own risk.
 
 ### Basic usage (no CSS)
 
