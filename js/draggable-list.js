@@ -73,11 +73,15 @@ angular.module('draggableList', [])
         if (isTouchDevice) {
 
           elem.bind('touchstart', function (e) {
-            dragData.from_index = scope.$parent.$index;
-            dragData.elem = e.target || e.srcElement;
+
+            if (e.touches.length === 1) {
+              dragData.from_index = scope.$parent.$index;
+              dragData.elem = e.target || e.srcElement;
+            }
           });
 
           elem.bind('touchmove', function (e) {
+
             e.preventDefault();
 
             var element = getElement(e),
@@ -90,11 +94,20 @@ angular.module('draggableList', [])
             }
 
             elem.addClass('touch-active');
+
+            if (e.touches.length === 2) {
+              dragData.scrollStart = dragData.scrollStart || window.pageYOffset;
+              dragData.touchStart = dragData.touchStart || e.touches[1].clientY;
+              window.scrollTo(0, dragData.scrollStart - (e.touches[1].clientY - dragData.touchStart));
+            }
           });
 
           elem.bind('touchend', function (e) {
-            dragData = {};
-            elem.removeClass('touch-active');
+
+            if (e.touches.length === 0) {
+              dragData = {};
+              elem.removeClass('touch-active');
+            }
           });
         }
       }
