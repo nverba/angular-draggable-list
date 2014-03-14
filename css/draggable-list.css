@@ -1,9 +1,19 @@
-.list-item.ng-enter, .list-item.ng-leave {
+/*
+  We're using CSS transitions for when
+  the enter and move events are triggered
+  for the element that has the .list-item
+  class
+*/
+
+
+.simple.list-item {
+  opacity:1;
   -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
   transition:0.5s linear all;
 }
 
-.list-item.ng-enter { color: red; }        /* starting animations for enter */
-.list-item.ng-enter-active { color: green; } /* terminal animations for enter */
-.list-item.ng-leave { color: blue; }        /* starting animations for leave */
-.list-item.ng-leave-active { color: yellow; } /* terminal animations for leave */
+.simple.list-item.touch-active {
+  opacity: 0;
+}

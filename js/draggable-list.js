@@ -44,7 +44,7 @@ angular.module('draggableList', [])
       link: function (scope, elem, attrs) {
 
         elem.bind('dragstart', function (e) {
-          // Firefox needs this to be enable HTML5 draggable, set to Text for ie compatability
+          // Firefox needs this to enable HTML5 draggable feature. (Set to 'Text' for IE compatability)
           e.dataTransfer.setData('Text', 'Firefox wont drag without this???');
           dragData.from_index = scope.$parent.$index;
           dragData.elem = e.target || e.srcElement;
@@ -88,10 +88,13 @@ angular.module('draggableList', [])
               update(scope, newIndex);
               dragData.elem = element;
             }
+
+            elem.addClass('touch-active');
           });
 
           elem.bind('touchend', function (e) {
             dragData = {};
+            elem.removeClass('touch-active');
           });
         }
       }
