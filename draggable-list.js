@@ -1,11 +1,10 @@
-'use strict';
-
 // angular-draggable-list
 // ----------------------
 // Copyright © 2014 Michael Murray | MIT license | https://github.com/nverba/angular-draggable-list
 
 angular.module('draggableList', [])
   .directive('draggableList', function () {
+    'use strict';
 
     var isTouchDevice = !!('ontouchstart' in window),
         dragData = {};
